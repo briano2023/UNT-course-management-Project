@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UNT Course Manager</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <h1>UNT Course Manager</h1>
+  <nav>
+    <a href="#home" data-v="home">Home</a>
+    <a href="#catalog" data-v="catalog">Catalog</a>
+    <a href="#path" data-v="path">Degree Path</a>
+  </nav>
+</header>
+<main>
+  <section id="home" class="view">
+    <div class="hero">
+      <h2>Plan your courses.<br>Fit them around your life.</h2>
+      <p>View your major's courses, build a degree path, and get ready for a conflict-free schedule.</p>
+    </div>
+    <form id="profile" class="card">
+      <h3>Get started</h3>
+      <label>Name <input id="p-name" required placeholder="Your name"></label>
+      <label>Major
+        <select id="p-major"><option>Computer Science</option><option>Information Technology</option><option>Cybersecurity</option></select>
+      </label>
+      <label>Year
+        <select id="p-year"><option>Freshman</option><option>Sophomore</option><option>Junior</option><option>Senior</option></select>
+      </label>
+      <button class="btn" type="submit">Save and Continue</button>
+    </form>
+  </section>
+
+  <section id="catalog" class="view">
+    <h2>Major Course Catalog</h2>
+    <div class="filters">
+      <input id="f-search" placeholder="Search by code or title...">
+      <select id="f-type"><option value="">All types</option></select>
+      <select id="f-level"><option value="">All levels</option><option value="1">1000</option><option value="2">2000</option><option value="3">3000</option><option value="4">4000</option></select>
+    </div>
+    <table>
+      <thead><tr><th>Course</th><th>Title</th><th>Type</th><th>Cr</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="note">Sample data. Verify against the UNT catalog before the final demo.</p>
+  </section>
+
+  <section id="path" class="view">
+    <h2>Degree Path</h2>
+    <div class="bar-wrap"><div class="bar"><div id="bar-fill"></div></div><span id="bar-text"></span></div>
+    <div class="actions">
+      <button class="btn" id="suggest">Load suggested plan</button>
+      <button class="btn ghost" id="clear">Clear plan</button>
+    </div>
+    <div id="unassigned" class="card"></div>
+    <div id="grid" class="grid"></div>
+  </section>
+</main>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
