@@ -1,0 +1,57 @@
+:root{--g:#00853E;--dg:#006B31;--lg:#E6F4EA;--gr:#f2f2f2;--tx:#222}
+*{box-sizing:border-box}
+body{margin:0;font-family:Segoe UI,Arial,sans-serif;color:var(--tx);background:#fafafa}
+header{background:var(--g);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:0 24px;flex-wrap:wrap}
+header h1{font-size:20px;margin:14px 0}
+nav a{color:#fff;text-decoration:none;padding:8px 12px;margin-left:4px;border-radius:4px}
+nav a.active{background:var(--dg);font-weight:bold}
+main{max-width:1100px;margin:0 auto;padding:24px}
+.view{display:none}.view.show{display:block}
+.hero{text-align:center;padding:24px 0}
+.hero h2{font-size:30px;margin:0 0 10px}
+.card{background:#fff;border:1px solid #ddd;border-radius:8px;padding:16px;margin:16px 0}
+#profile{max-width:380px;margin:0 auto}
+label{display:block;font-weight:600;margin:10px 0}
+input,select{width:100%;padding:8px;margin-top:4px;border:1px solid #bbb;border-radius:6px;font:inherit}
+.btn{background:var(--g);color:#fff;border:0;border-radius:6px;padding:8px 14px;font:inherit;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--dg)}
+.btn.ghost{background:#fff;color:var(--g);border:1px solid var(--g)}
+.btn.done{background:#999}
+.filters{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.filters input{flex:2;min-width:200px}.filters select{flex:1;min-width:130px}
+table{width:100%;border-collapse:collapse;background:#fff}
+th{background:var(--g);color:#fff;text-align:left}
+th,td{padding:9px 10px;border-bottom:1px solid #e5e5e5}
+tr:nth-child(even) td{background:var(--gr)}
+.note{color:#777;font-size:13px}
+.bar-wrap{display:flex;align-items:center;gap:12px}
+.bar{flex:1;max-width:420px;height:16px;background:#e3e3e3;border-radius:8px;overflow:hidden}
+#bar-fill{height:100%;width:0;background:var(--g)}
+.actions{margin:14px 0;display:flex;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.sem{background:#fff;border:2px solid var(--g);border-radius:8px;padding:10px;min-height:120px}
+.sem h4{margin:0 0 8px;color:var(--g)}
+.sem .tot{font-size:12px;color:#666}.sem .tot.over{color:#b22222;font-weight:bold}
+.chip{display:flex;justify-content:space-between;align-items:center;gap:6px;background:var(--lg);border:1px solid var(--g);border-radius:6px;padding:5px 8px;margin:6px 0;font-size:13px}
+.chip select{width:auto;margin:0;padding:2px;font-size:12px}
+.chip button{border:0;background:none;color:#b22222;cursor:pointer;font-size:15px}
+
+#login-page {min-height: 100vh;display: flex;justify-content: center;align-items: center;padding: 20px;background: linear-gradient(135deg, #006B31, #00853E);}
+.login-container {width: 100%;max-width: 420px;background: white;padding: 40px;border-radius: 14px;box-shadow: 0 10px 35px rgba(0,0,0,0.2);}
+.login-logo {text-align: center;margin-bottom: 30px;}
+.login-logo h1 {color: var(--g);font-size: 48px;margin: 0;font-weight: 800;}
+.login-logo p {color: #666;font-size: 13px;letter-spacing: 3px;margin: 5px 0;font-weight: bold;}
+.login-container h2 {text-align: center;margin-bottom: 8px;color: #222;}
+.login-subtitle {text-align: center;color: #777;font-size: 14px;margin-bottom: 25px;}
+.login-container label {display: block;font-weight: 600;margin: 15px 0 5px;}
+.login-container input:not([type="checkbox"]) {width: 100%;padding: 12px;border: 1px solid #ccc;border-radius: 7px;font-size: 14px;}
+.login-container input:focus {outline: none;border-color: var(--g);box-shadow: 0 0 4px rgba(0,133,62,0.3);}
+.login-options {display: flex;justify-content: space-between;align-items: center;margin: 15px 0;}
+.login-options .remember {display: flex;align-items: center;gap: 7px;margin: 0;font-size: 13px;font-weight: normal;}
+.login-options input {width: auto;}
+.login-btn {width: 100%;padding: 12px;margin-top: 10px;font-size: 16px;}
+#login-error {color: #c62828;font-size: 13px;text-align: center;}
+.login-footer {text-align: center;color: #888;font-size: 12px;margin-top: 25px;}
+.logout-btn {margin-left: 12px;background: #fff;color: var(--g);}
+.logout-btn:hover {background: #e6f4ea;}
+@media(max-width: 480px) {.login-container {padding: 28px 22px;}}
