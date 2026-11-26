@@ -38,17 +38,6 @@ loginForm.addEventListener("submit", function(e) {
   }
 });
 
-// Handle logout
-document.getElementById("logout-btn").addEventListener("click", function() {
-
-  sessionStorage.removeItem("unt-logged-in");
-
-  location.hash = "#home";
-
-  checkLogin();
-
-});
-
 checkLogin();
 
 const KEY = "unt-course-manager";
