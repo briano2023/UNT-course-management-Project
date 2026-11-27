@@ -1,3 +1,4 @@
+
 // Saved in the browser (localStorage) for now. A backend/database can replace this later.
 
 const loginPage = document.getElementById("login-page");
@@ -54,6 +55,7 @@ function show() {
   if (v === "catalog") renderCatalog();
   if (v === "path") renderPath();
   if (v === "transfer") renderTransfers();
+  if (v === "dashboard") renderDashboard();
 }
 window.addEventListener("hashchange", show);
 
@@ -69,6 +71,25 @@ $("profile").addEventListener("submit", e => {
   save();
   location.hash = "#catalog";
 });
+
+    // ---- Dashboard ----
+function renderDashboard() {
+  const p = state.profile;
+  $("dash-greet").textContent = p && p.name ? "Welcome back, " + p.name : "Welcome";
+  $("dash-major").textContent = p ? p.major + "  |  " + p.year : "Fill out the Home page to set your major and year.";
+  const codes = Object.keys(state.plan);
+  const approved = (state.transfers || []).filter(c => c.status === "Approved");
+  const equiv = new Set(approved.map(c => c.equivalent.trim().toUpperCase()).filter(Boolean));
+  const planned = codes.filter(c => !equiv.has(c.toUpperCase())).reduce((n, c) => n + byCode(c).credits, 0);
+  const transfer = approved.reduce((n, c) => n + c.credits, 0);
+  const credits = planned + transfer;
+  $("dash-credits").textContent = credits;
+  $("dash-courses").textContent = codes.length;
+  $("dash-unassigned").textContent = codes.filter(c => state.plan[c] < 0).length;
+  $("dash-transfer").textContent = transfer;
+  $("dash-bar-fill").style.width = Math.min(100, credits / TOTAL_CREDITS * 100) + "%";
+  $("dash-bar-text").textContent = credits + " / " + TOTAL_CREDITS + " credits";
+}
 
 // ---- Catalog (Feature 1) ----
 [...new Set(COURSES.map(c => c.type))].forEach(t => $("f-type").add(new Option(t, t)));
