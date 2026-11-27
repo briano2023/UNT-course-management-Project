@@ -55,3 +55,16 @@ tr:nth-child(even) td{background:var(--gr)}
 .logout-btn {margin-left: 12px;background: #fff;color: var(--g);}
 .logout-btn:hover {background: #e6f4ea;}
 @media(max-width: 480px) {.login-container {padding: 28px 22px;}}
+
+.transfer-summary {display: grid;grid-template-columns: repeat(4, 1fr);gap: 12px;margin: 20px 0;}
+.transfer-stat {background: white;border: 1px solid #ddd;border-radius: 8px;padding: 16px;text-align: center;}
+.transfer-stat h3 {color: var(--g);font-size: 28px;margin: 0;}
+.transfer-stat p {color: #666;font-size: 13px;margin-bottom: 0;}
+#transfer-form {max-width: 550px;}
+#transfer-form button {margin-top: 10px;}
+.status-select {min-width: 110px;padding: 6px;margin: 0;}
+.transfer-delete {background: #c62828;color: white;border: none;border-radius: 5px;padding: 6px 10px;cursor: pointer;}
+.transfer-delete:hover {background: #991b1b;}
+.transfer-table-wrap {overflow-x: auto;}
+@media(max-width: 650px) {.transfer-summary {grid-template-columns: repeat(2, 1fr);}
+.transfer-table-wrap table {min-width: 700px;}}
