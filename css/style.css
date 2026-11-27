@@ -35,3 +35,8 @@ tr:nth-child(even) td{background:var(--gr)}
 .chip{display:flex;justify-content:space-between;align-items:center;gap:6px;background:var(--lg);border:1px solid var(--g);border-radius:6px;padding:5px 8px;margin:6px 0;font-size:13px}
 .chip select{width:auto;margin:0;padding:2px;font-size:12px}
 .chip button{border:0;background:none;color:#b22222;cursor:pointer;font-size:15px}
+.dash-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:20px 0}
+.dash-card{display:block;background:var(--lg);border:2px solid var(--g);border-radius:10px;padding:22px;text-align:center;text-decoration:none;color:var(--tx)}
+.dash-card:hover{background:#d4ecdb}
+.dash-card h3{margin:0 0 6px;color:var(--g)}
+.dash-card p{margin:0;font-size:13px;color:#555}
