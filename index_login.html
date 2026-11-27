@@ -104,6 +104,92 @@
     <p class="note">Sample data. Verify against the UNT catalog before the final demo.</p>
   </section>
 
+  <section id="transfer" class="view">
+  <h2>Credit Transfer Center</h2>
+  <p>Manage courses transferred from other colleges and universities.</p>
+
+  <div class="transfer-summary">
+    <div class="transfer-stat">
+      <h3 id="transfer-total">0</h3>
+      <p>Total Submitted</p>
+    </div>
+    <div class="transfer-stat">
+      <h3 id="transfer-approved">0</h3>
+      <p>Approved Credits</p>
+    </div>
+    <div class="transfer-stat">
+      <h3 id="transfer-pending">0</h3>
+      <p>Pending Credits</p>
+    </div>
+    <div class="transfer-stat">
+      <h3 id="transfer-rejected">0</h3>
+      <p>Rejected Credits</p>
+    </div>
+  </div>
+
+  <form id="transfer-form" class="card">
+    <h3>Add Transfer Course</h3>
+
+    <label>Previous Institution
+      <input id="transfer-school"
+        placeholder="Example: Dallas College" required>
+    </label>
+
+    <label>Previous Course Code
+      <input id="transfer-code"
+        placeholder="Example: ENGL 1301" required>
+    </label>
+
+    <label>Course Title
+      <input id="transfer-title"
+        placeholder="Example: Composition I" required>
+    </label>
+
+    <label>Credit Hours
+      <input id="transfer-credits"
+        type="number" min="1" max="12" required>
+    </label>
+
+    <label>UNT Equivalent (Optional)
+      <input id="transfer-equivalent"
+        placeholder="Example: ENGL 1310">
+    </label>
+
+    <button class="btn" type="submit">
+      Submit Transfer Course
+    </button>
+  </form>
+
+  <div class="card">
+    <h3>Transfer Course Records</h3>
+
+    <div class="filters">
+      <select id="transfer-filter">
+        <option value="">All Statuses</option>
+        <option value="Pending">Pending</option>
+        <option value="Approved">Approved</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
+
+    <div class="transfer-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Institution</th>
+            <th>Course</th>
+            <th>UNT Equivalent</th>
+            <th>Credits</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="transfer-rows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
   <section id="path" class="view">
     <h2>Degree Path</h2>
     <div class="bar-wrap"><div class="bar"><div id="bar-fill"></div></div><span id="bar-text"></span></div>
