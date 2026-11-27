@@ -53,6 +53,7 @@ function show() {
   document.querySelectorAll("nav a").forEach(a => a.classList.toggle("active", a.dataset.v === v));
   if (v === "catalog") renderCatalog();
   if (v === "path") renderPath();
+  if (v === "transfer") renderTransfers();
 }
 window.addEventListener("hashchange", show);
 
@@ -100,7 +101,21 @@ function chip(code, sem) {
 }
 function renderPath() {
   const codes = Object.keys(state.plan);
-  const credits = codes.reduce((n, c) => n + byCode(c).credits, 0);
+  const approvedTransfers = state.transfers.filter(
+  c => c.status === "Approved"
+  );
+const transferredEquivalents = new Set(
+  approvedTransfers
+    .map(c => c.equivalent.trim().toUpperCase())
+    .filter(Boolean)
+);
+const plannedCredits = codes
+  .filter(c => !transferredEquivalents.has(c.toUpperCase()))
+  .reduce((n, c) => n + byCode(c).credits, 0);
+const transferCredits = approvedTransfers.reduce(
+  (n, c) => n + c.credits, 0
+);
+const credits = plannedCredits + transferCredits;
   $("bar-fill").style.width = Math.min(100, credits / TOTAL_CREDITS * 100) + "%";
   $("bar-text").textContent = `${credits} / ${TOTAL_CREDITS} credits planned`;
   const un = codes.filter(c => state.plan[c] < 0);
@@ -122,4 +137,198 @@ document.addEventListener("click", e => {
 $("suggest").addEventListener("click", () => { state.plan = {...SUGGESTED}; save(); renderPath(); });
 $("clear").addEventListener("click", () => { state.plan = {}; save(); renderPath(); });
 
+// ---- Credit Transfer System (Feature 3) ----
+
+// Initialize transfer records
+if (!Array.isArray(state.transfers)) {
+  state.transfers = [];
+}
+
+const saveTransfers = () => save();
+
+// Prevent HTML injection in transfer records
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+
+// ---- Add Transfer Course ----
+
+$("transfer-form").addEventListener("submit", e => {
+  e.preventDefault();
+
+  const school = $("transfer-school").value.trim();
+  const code = $("transfer-code").value.trim();
+  const title = $("transfer-title").value.trim();
+  const credits = Number($("transfer-credits").value);
+  const equivalent = $("transfer-equivalent").value.trim();
+
+  if (
+    !school ||
+    !code ||
+    !title ||
+    !Number.isInteger(credits) ||
+    credits < 1 ||
+    credits > 12
+  ) {
+    alert("Please enter valid transfer course information.");
+    return;
+  }
+
+  state.transfers.push({
+    id: crypto.randomUUID(),
+    school,
+    code,
+    title,
+    credits,
+    equivalent,
+    status: "Pending"
+  });
+
+  saveTransfers();
+
+  $("transfer-form").reset();
+
+  renderTransfers();
+
+  alert("Transfer course submitted successfully!");
+});
+
+
+// ---- Display Transfer Courses and Credit Totals ----
+
+function renderTransfers() {
+  const transfers = state.transfers;
+
+  const approved = transfers
+    .filter(c => c.status === "Approved")
+    .reduce((sum, c) => sum + c.credits, 0);
+
+  const pending = transfers
+    .filter(c => c.status === "Pending")
+    .reduce((sum, c) => sum + c.credits, 0);
+
+  const rejected = transfers
+    .filter(c => c.status === "Rejected")
+    .reduce((sum, c) => sum + c.credits, 0);
+
+  const total = transfers.reduce(
+    (sum, c) => sum + c.credits, 0
+  );
+
+  $("transfer-total").textContent = total;
+  $("transfer-approved").textContent = approved;
+  $("transfer-pending").textContent = pending;
+  $("transfer-rejected").textContent = rejected;
+
+  const filter = $("transfer-filter").value;
+
+  const filtered = transfers.filter(c =>
+    !filter || c.status === filter
+  );
+
+  $("transfer-rows").innerHTML = filtered.map(c => `
+    <tr>
+      <td>${escapeHTML(c.school)}</td>
+
+      <td>
+        <strong>${escapeHTML(c.code)}</strong><br>
+        ${escapeHTML(c.title)}
+      </td>
+
+      <td>${escapeHTML(c.equivalent || "Not assigned")}</td>
+
+      <td>${c.credits}</td>
+
+      <td>
+        <select class="status-select"
+          data-transfer-status="${escapeHTML(c.id)}">
+
+          <option value="Pending"
+            ${c.status === "Pending" ? "selected" : ""}>
+            Pending
+          </option>
+
+          <option value="Approved"
+            ${c.status === "Approved" ? "selected" : ""}>
+            Approved
+          </option>
+
+          <option value="Rejected"
+            ${c.status === "Rejected" ? "selected" : ""}>
+            Rejected
+          </option>
+
+        </select>
+      </td>
+
+      <td>
+        <button class="transfer-delete"
+          data-transfer-delete="${escapeHTML(c.id)}">
+          Delete
+        </button>
+      </td>
+    </tr>
+  `).join("") || `
+    <tr>
+      <td colspan="6">No transfer courses found.</td>
+    </tr>
+  `;
+}
+
+
+// ---- Change Transfer Status ----
+
+$("transfer-rows").addEventListener("change", e => {
+  const id = e.target.dataset.transferStatus;
+
+  if (!id) return;
+
+  const course = state.transfers.find(c => c.id === id);
+
+  if (!course) return;
+
+  course.status = e.target.value;
+
+  saveTransfers();
+  renderTransfers();
+
+  renderPath();
+});
+
+
+// ---- Delete Transfer Course ----
+
+$("transfer-rows").addEventListener("click", e => {
+  const id = e.target.dataset.transferDelete;
+
+  if (!id) return;
+
+  if (!confirm("Delete this transfer course?")) return;
+
+  state.transfers = state.transfers.filter(c => c.id !== id);
+
+  saveTransfers();
+  renderTransfers();
+  renderPath();
+});
+
+
+// ---- Filter Transfer Courses ----
+
+$("transfer-filter").addEventListener(
+  "change",
+  renderTransfers
+);
+
+
+// ---- Initialize Application ----
+
 show();
+renderTransfers();
