@@ -64,6 +64,7 @@
 <header>
   <h1>UNT Course Manager</h1>
   <nav>
+    <a href="#dashboard" data-v="dashboard">Dashboard</a>
     <a href="#home" data-v="home">Home</a>
     <a href="#catalog" data-v="catalog">Catalog</a>
     <a href="#path" data-v="path">Degree Path</a>
@@ -71,6 +72,22 @@
   </nav>
 </header>
 <main>
+  <section id="dashboard" class="view">
+  <h2 id="dash-greet">Welcome</h2>
+  <p id="dash-major" class="note"></p>
+  <div class="bar-wrap"><div class="bar"><div id="dash-bar-fill" style="height:100%;width:0;background:var(--g)"></div></div><span id="dash-bar-text"></span></div>
+  <div class="transfer-summary">
+    <div class="transfer-stat"><h3 id="dash-credits">0</h3><p>Credits Planned</p></div>
+    <div class="transfer-stat"><h3 id="dash-courses">0</h3><p>Courses in Plan</p></div>
+    <div class="transfer-stat"><h3 id="dash-unassigned">0</h3><p>Unassigned Courses</p></div>
+    <div class="transfer-stat"><h3 id="dash-transfer">0</h3><p>Approved Transfer Credits</p></div>
+  </div>
+  <div class="dash-cards">
+    <a class="dash-card" href="#catalog"><h3>Course Catalog</h3><p>Browse and add courses</p></a>
+    <a class="dash-card" href="#path"><h3>Degree Path</h3><p>Plan each semester</p></a>
+    <a class="dash-card" href="#transfer"><h3>Credit Transfer</h3><p>Track transfer courses</p></a>
+  </div>
+</section>
   <section id="home" class="view">
     <div class="hero">
       <h2>Plan your courses.<br>Fit them around your life.</h2>
